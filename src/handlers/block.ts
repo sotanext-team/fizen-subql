@@ -8,15 +8,11 @@ let isFirstSync = true
 
 export async function ensureBlock (block: SubstrateBlock) {
   const recordId = block.block.hash?.toString()
-
   let data = await Block.get(recordId)
-
   if (!data) {
     data = new Block(recordId)
-
     await data.save()
   }
-
   return data
 }
 
@@ -40,10 +36,11 @@ export async function createBlock (origin: SubstrateBlock) {
 
   block.number = blockNumber
   block.parentHash = parentHash
-  block.stateRoot = stateRoot
-  block.extrinsicRoot = extrinsicsRoot
+  // block.stateRoot = stateRoot
+  // block.extrinsicRoot = extrinsicsRoot
   block.specVersion = specVersion
   block.timestamp = timestamp
+  logger.info("Block number" + blockNumber)
 
   await block.save()
 

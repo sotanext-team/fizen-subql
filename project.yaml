@@ -9,11 +9,11 @@ network:
   genesisHash: '0x3dfe5cace3fdf4224af16ec22cc171769cdac31a31144a659ac58fecacde9077'
   endpoint: wss://node-testnet.fizen.io
   chaintypes:
-    file: ./types.json
+    file: types.json
 dataSources:
   - kind: substrate/Runtime
     startBlock: 1
-    mapping:x
+    mapping:
       file: ./dist/index.js
       handlers:
         - handler: handleBlock
