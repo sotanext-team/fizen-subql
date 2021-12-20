@@ -1,0 +1,27 @@
+specVersion: 0.2.0
+name: fizen-subql
+version: 1.0.0
+description: ''
+repository: ''
+schema:
+  file: ./schema.graphql
+network:
+  genesisHash: '0x3dfe5cace3fdf4224af16ec22cc171769cdac31a31144a659ac58fecacde9077'
+  endpoint: wss://node-testnet.fizen.io
+  chaintypes:
+    file: ./types.json
+dataSources:
+  - kind: substrate/Runtime
+    startBlock: 1
+    mapping:x
+      file: ./dist/index.js
+      handlers:
+        - handler: handleBlock
+          kind: substrate/BlockHandler
+#        - handler: handleEvent
+#          kind: substrate/EventHandler
+#          filter:
+#            module: balances
+#            method: Deposit
+#        - handler: handleCall
+#          kind: substrate/CallHandler

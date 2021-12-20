@@ -1,0 +1,485 @@
+{
+  "OrmlAccountData": { "free": "u128", "reserved": "u128", "frozen": "u128" },
+  "AssetId": "u32",
+  "CurrencyId": "u32",
+  "CurrencyIdOf": "CurrencyId",
+  "ChainId": "u32",
+  "SrcChainId": "u32",
+  "AssetType": {
+    "_enum": [
+      "Token",
+      "PoolShare"
+    ]
+  },
+  "TypedEnum": {
+    "_enum": {
+      "Token": "u32",
+      "PoolShare": "Vec<AssetId>"
+    }
+  },
+  "DepositNonce": "u64",
+  "ResourceId": "[u8;32]",
+  "Amount": "i128",
+  "Price": "u128",
+  "SpecIndex": "Vec<u8>",
+  "RequestIdentifier": "u64",
+  "DataVersion": "u64",
+  "Address": "MultiAddress",
+  "LookupSource": "MultiAddress",
+  "FeedId": "u32",
+  "RoundId": "u32",
+  "Value": "u128",
+  "FeedConfig": {
+    "owner": "AccountId",
+    "pending_owner": "Option<AccountId>",
+    "submission_value_bounds": "(Value, Value)",
+    "submission_count_bounds": "(u32, u32)",
+    "payment": "Balance",
+    "timeout": "BlockNumber",
+    "decimals": "u8",
+    "description": "Vec<u8>",
+    "restart_delay": "u32",
+    "reporting_round": "RoundId",
+    "latest_round": "RoundId",
+    "first_valid_round": "Option<RoundId>",
+    "oracle_count": "u32",
+    "pruning_window": "u32",
+    "next_round_to_prune": "RoundId",
+    "debt": "Balance",
+    "max_debt": "Option<Balance>"
+  },
+  "FeedConfigOf": "FeedConfig",
+  "Round": {
+    "started_at": "BlockNumber",
+    "answer": "Option<Value>",
+    "updated_at": "Option<BlockNumber>",
+    "answered_in_round": "Option<RoundId>"
+  },
+  "RoundOf": "Round",
+  "RoundDetails": {
+    "submissions": "Vec<Value>",
+    "submission_count_bounds": "(u32, u32)",
+    "payment": "Balance",
+    "timeout": "BlockNumber"
+  },
+  "RoundDetailsOf": "RoundDetails",
+  "OracleMeta": {
+    "withdrawable": "Balance",
+    "admin": "AccountId",
+    "pending_admin": "Option<AccountId>"
+  },
+  "OracleMetaOf": "OracleMeta",
+  "OracleStatus": {
+    "starting_round": "RoundId",
+    "ending_round": "Option<RoundId>",
+    "last_reported_round": "Option<RoundId>",
+    "last_started_round": "Option<RoundId>",
+    "latest_submission": "Option<Value>"
+  },
+  "OracleStatusOf": "OracleStatus",
+  "Requester": {
+    "delay": "RoundId",
+    "last_started_round": "Option<RoundId>"
+  },
+  "RoundData": {
+    "started_at": "BlockNumber",
+    "answer": "Value",
+    "updated_at": "BlockNumber",
+    "answered_in_round": "RoundId"
+  },
+  "RoundDataOf": "RoundData",
+  "SubmissionBounds": "(u32, u32)",
+  "chainbridge::ChainId": "u8",
+  "ProposalVotes": {
+    "votes_for": "Vec<AccountId>",
+    "votes_against": "Vec<AccountId>",
+    "status": "enum"
+  },
+  "Erc721Token": {
+    "id": "TokenId",
+    "metadata": "Vec<u8>"
+  },
+  "CallOf": "Call",
+  "DispatchTime": {
+    "_enum": {
+      "At": "BlockNumber",
+      "After": "BlockNumber"
+    }
+  },
+  "ScheduleTaskIndex": "u32",
+  "DelayedOrigin": {
+    "delay": "BlockNumber",
+    "origin": "PalletsOrigin"
+  },
+  "AuthorityOrigin": "DelayedOrigin",
+  "StorageValue": "Vec<u8>",
+  "GraduallyUpdate": {
+    "key": "StorageKey",
+    "targetValue": "StorageValue",
+    "perBlock": "StorageValue"
+  },
+  "StorageKeyBytes": "Vec<u8>",
+  "StorageValueBytes": "Vec<u8>",
+  "RpcDataProviderId": "Text",
+  "DataProviderId": "u8",
+  "TimestampedValue": {
+    "value": "OracleValue",
+    "timestamp": "Moment"
+  },
+  "TimestampedValueOf": "TimestampedValue",
+  "OrderedSet": "Vec<AccountId>",
+  "OrmlBalanceLock": {
+    "amount": "Balance",
+    "id": "LockIdentifier"
+  },
+  "AuctionInfo": {
+    "bid": "Option<(AccountId, Balance)>",
+    "start": "BlockNumber",
+    "end": "Option<BlockNumber>"
+  },
+  "DelayedDispatchTime": {
+    "_enum": {
+      "At": "BlockNumber",
+      "After": "BlockNumber"
+    }
+  },
+  "DispatchId": "u32",
+  "OrmlVestingSchedule": {
+    "start": "BlockNumber",
+    "period": "BlockNumber",
+    "periodCount": "u32",
+    "perPeriod": "Compact<Balance>"
+  },
+  "VestingScheduleOf": "OrmlVestingSchedule",
+  "OrmlCurrencyId": "CurrencyId",
+  "PoolInfo": {
+    "totalShares": "Share",
+    "rewards": "BTreeMap<OrmlCurrencyId, (Balance, Balance)>"
+  },
+  "CompactBalance": "Compact<Balance>",
+  "PoolInfoV0": {
+    "totalShares": "Compact<Share>",
+    "totalRewards": "CompactBalance",
+    "totalWithdrawnRewards": "CompactBalance"
+  },
+  "Share": "u128",
+  "OracleValue": "Price",
+  "AmountOf": "Amount",
+  "AuctionId": "u32",
+  "AuctionIdOf": "AuctionId",
+  "TokenSymbol": {
+    "_enum": {
+      "ACA": 0,
+      "AUSD": 1,
+      "DOT": 2,
+      "LDOT": 3,
+      "RENBTC": 20,
+      "CASH": 21,
+      "KAR": 128,
+      "KUSD": 129,
+      "KSM": 130,
+      "LKSM": 131,
+      "BNC": 168,
+      "VSKSM": 169
+    }
+  },
+  "DexShare": {
+    "_enum": {
+      "Token": "TokenSymbol",
+      "Erc20": "EvmAddress"
+    }
+  },
+  "AirDropCurrencyId": {
+    "_enum": [
+      "KAR",
+      "ACA"
+    ]
+  },
+  "AuthoritysOriginId": {
+    "_enum": [
+      "Root",
+      "Treasury",
+      "HonzonTreasury",
+      "HomaTreasury",
+      "TreasuryReserve"
+    ]
+  },
+  "AcalaDataProviderId": {
+    "_enum": [
+      "Aggregated",
+      "Acala",
+      "Band"
+    ]
+  },
+  "TradingPair": "(CurrencyId,  CurrencyId)",
+  "ChainBridgeChainId": "u8",
+  "PalletBalanceOf": "Balance",
+  "CollateralAuctionItem": {
+    "refundRecipient": "AccountId",
+    "currencyId": "CurrencyId",
+    "initialAmount": "Compact<Balance>",
+    "amount": "Compact<Balance>",
+    "target": "Compact<Balance>",
+    "startTime": "BlockNumber"
+  },
+  "DebitAuctionItem": {
+    "initialAmount": "Compact<Balance>",
+    "amount": "Compact<Balance>",
+    "fix": "Compact<Balance>",
+    "startTime": "BlockNumber"
+  },
+  "SurplusAuctionItem": {
+    "amount": "Compact<Balance>",
+    "startTime": "BlockNumber"
+  },
+  "LiquidationStrategy": {
+    "_enum": [
+      "Auction",
+      "Exchange"
+    ]
+  },
+  "OptionRate": "Option<Rate>",
+  "OptionRatio": "Option<Ratio>",
+  "ChangeOptionRate": {
+    "_enum": {
+      "NoChange": "Null",
+      "NewValue": "Option<Rate>"
+    }
+  },
+  "ChangeOptionRatio": {
+    "_enum": {
+      "NoChange": "Null",
+      "NewValue": "Option<Ratio>"
+    }
+  },
+  "ChangeBalance": {
+    "_enum": {
+      "NoChange": "Null",
+      "NewValue": "Balance"
+    }
+  },
+  "RiskManagementParams": {
+    "maximumTotalDebitValue": "u128",
+    "interestRatePerSec": "Option<Rate>",
+    "liquidationRatio": "Option<Rate>",
+    "liquidationPenalty": "Option<Rate>",
+    "requiredCollateralRatio": "Option<Rate>",
+    "notifiedCollateralRatio": "Option<Ratio>"
+  },
+  "CandidateInfoOf": "CandidateInfo",
+  "TradingPairProvisionParameters": {
+    "minContribution": "(Balance, Balance)",
+    "targetProvision": "(Balance, Balance)",
+    "accumulatedProvision": "(Balance, Balance)",
+    "notBefore": "BlockNumber"
+  },
+  "BalanceWrapper": {
+    "amount": "Balance"
+  },
+  "BalanceRequest": {
+    "amount": "Balance"
+  },
+  "TradingPairStatus": {
+    "_enum": {
+      "NotEnabled": "Null",
+      "Provisioning": "TradingPairProvisionParameters",
+      "Enabled": "Null"
+    }
+  },
+  "Erc20Info": {
+    "address": "EvmAddress",
+    "name": "Vec<u8>",
+    "symbol": "Vec<u8>",
+    "decimals": "u8"
+  },
+  "EstimateResourcesResponse": {
+    "gas": "u256",
+    "storage": "i32",
+    "weightFee": "u256"
+  },
+  "EvmAccountInfo": {
+    "nonce": "Index",
+    "contractInfo": "Option<EvmContractInfo>"
+  },
+  "CodeInfo": {
+    "codeSize": "u32",
+    "refCount": "u32"
+  },
+  "EvmContractInfo": {
+    "codeHash": "H256",
+    "maintainer": "H160",
+    "deployed": "bool"
+  },
+  "EvmAddress": "H160",
+  "CallRequest": {
+    "from": "Option<H160>",
+    "to": "Option<H160>",
+    "gasLimit": "Option<u32>",
+    "storageLimit": "Option<u32>",
+    "value": "Option<U128>",
+    "data": "Option<Bytes>"
+  },
+  "RedeemStrategy": {
+    "_enum": {
+      "Immediately": "Null",
+      "Target": "EraIndex",
+      "WaitForUnbonding": "Null"
+    }
+  },
+  "RelaychainAccountId": "AccountId",
+  "SlashInfo": {
+    "validator": "RelaychainAccountId",
+    "relaychainTokenAmount": "Balance"
+  },
+  "ValidatorBacking": {
+    "totalInsurance": "Balance",
+    "isFrozen": "bool"
+  },
+  "Guarantee": {
+    "total": "Balance",
+    "bonded": "Balance",
+    "unbonding": "Option<(Balance, BlockNumber)>"
+  },
+  "PoolId": {
+    "_enum": {
+      "Loans": "CurrencyId",
+      "Dex": "CurrencyId"
+    }
+  },
+  "PoolIdV0": {
+    "_enum": {
+      "LoansIncentive": "CurrencyId",
+      "DexIncentive": "CurrencyId",
+      "HomaIncentive": "Null",
+      "DexSaving": "CurrencyId",
+      "HomaValidatorAllowance": "AccountId"
+    }
+  },
+  "Position": {
+    "collateral": "u128",
+    "debit": "u128"
+  },
+  "CID": "Vec<u8>",
+  "Attributes": "BTreeMap<Vec<u8>, Vec<u8>>",
+  "TokenInfoOf": {
+    "metadata": "CID",
+    "owner": "AccountId",
+    "data": "TokenData"
+  },
+  "Properties": {
+    "_set": {
+      "_bitLength": 8,
+      "Transferable": 1,
+      "Burnable": 2,
+      "Mintable": 4,
+      "ClassPropertiesMutable": 8
+    }
+  },
+  "ClassData": {
+    "deposit": "Balance",
+    "properties": "Properties",
+    "attributes": "Attributes"
+  },
+  "TokenData": {
+    "deposit": "Balance",
+    "attributes": "Attributes"
+  },
+  "TokenId": "U256",
+  "TokenIdOf": "TokenId",
+  "NFTClassId": "u32",
+  "ClassIdOf": "ClassId",
+  "NFTBalance": "u128",
+  "NFTBalanceOf": "NFTBalance",
+  "ClassInfoOf": {
+    "metadata": "CID",
+    "totalIssuance": "TokenId",
+    "owner": "AccountId",
+    "data": "ClassData"
+  },
+  "NomineeId": "AccountId",
+  "HomaUnlockChunk": {
+    "value": "Balance",
+    "era": "EraIndex"
+  },
+  "BondingLedger": {
+    "total": "Balance",
+    "active": "Balance",
+    "unlocking": "Vec<HomaUnlockChunk>"
+  },
+  "OracleKey": "CurrencyId",
+  "AsOriginId": "AuthoritysOriginId",
+  "ProxyType": {
+    "_enum": [
+      "Any",
+      "CancelProxy",
+      "Governance",
+      "Auction",
+      "Swap",
+      "Loan"
+    ]
+  },
+  "AtLeast64BitUnsigned": "u128",
+  "StableAssetPoolId": "u32",
+  "RelayChainBlockNumberOf": "RelayChainBlockNumber",
+  "SubAccountStatus": {
+    "bonded": "Balance",
+    "available": "Balance",
+    "unbonding": "Vec<(EraIndex,Balance)>",
+    "mockRewardRate": "Rate"
+  },
+  "Params": {
+    "targetMaxFreeUnbondedRatio": "Ratio",
+    "targetMinFreeUnbondedRatio": "Ratio",
+    "targetUnbondingToFreeRatio": "Ratio",
+    "unbondingToFreeAdjustment": "Ratio",
+    "baseFeeRate": "Rate"
+  },
+  "StakingPoolPhase": {
+    "_enum": [
+      "Started",
+      "RelaychainUpdated",
+      "LedgerUpdated",
+      "Finished"
+    ]
+  },
+  "Ledger": {
+    "bonded": "Balance",
+    "unbondingToFree": "Balance",
+    "freePool": "Balance",
+    "toUnbondNextEra": "(Balance, Balance)"
+  },
+  "ChangeRate": {
+    "_enum": {
+      "NoChange": "Null",
+      "NewValue": "Rate"
+    }
+  },
+  "ChangeRatio": {
+    "_enum": {
+      "NoChange": "Null",
+      "NewValue": "Ratio"
+    }
+  },
+  "BalanceInfo": {
+    "amount": "Balance"
+  },
+  "PolkadotAccountId": "AccountId",
+  "PolkadotAccountIdOf": "PolkadotAccountId",
+  "ExchangeRate": "FixedU128",
+  "Rate": "FixedU128",
+  "Ratio": "FixedU128",
+  "PublicKey": "[u8; 20]",
+  "DestAddress": "Vec<u8>",
+  "PoolTokenIndex": "u32",
+  "Keys": "SessionKeys1",
+  "AssetDetailsT": {
+    "name": "BoundedVec<u8, u32>",
+    "assetType": "AssetType",
+    "existentialDeposit": "u128",
+    "locked": "bool"
+  },
+  "AssetMetadata": {
+    "symbol": "BoundedVec<u8, u32>",
+    "decimals": "u8"
+  }
+}
