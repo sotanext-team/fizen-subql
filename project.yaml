@@ -6,8 +6,8 @@ repository: ''
 schema:
   file: ./schema.graphql
 network:
-  genesisHash: '0x3dfe5cace3fdf4224af16ec22cc171769cdac31a31144a659ac58fecacde9077'
-  endpoint: wss://node-testnet.fizen.io
+  genesisHash: '0x18e5b59ea1242150f57b2f400985e176f2a193b17fdc99569d20b0a16eef6ef8'
+  endpoint: wss://13.229.32.165:443
   chaintypes:
     file: types.json
 dataSources:
@@ -18,8 +18,8 @@ dataSources:
       handlers:
         - handler: handleBlock
           kind: substrate/BlockHandler
-#        - handler: handleEvent
-#          kind: substrate/EventHandler
+        - handler: handleEvent
+          kind: substrate/EventHandler
 #          filter:
 #            module: balances
 #            method: Deposit

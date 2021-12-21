@@ -1,24 +1,21 @@
 {
-  "types": {
+  "types":{
+    "AccountData": {
+      "free": "Balance",
+      "frozen": "Balance",
+      "reserved": "Balance"
+    },
     "OrmlAccountData": { "free": "u128", "reserved": "u128", "frozen": "u128" },
     "AssetId": "u32",
     "CurrencyId": "u32",
-    "Phase": {
-      "_enum": {
-        "ApplyExtrinsic": "u32",
-        "Finalization": "u32",
-        "Initialization": "u32"
-      }
-    },
-    "EventRecord": {
-      "phase": "Phase",
-      "topics": "Vec<T>"
-    },
     "CurrencyIdOf": "CurrencyId",
-    "ChainId": "u8",
+    "ChainId": "u32",
     "SrcChainId": "u32",
     "AssetType": {
-      "_enum": ["Token", "PoolShare"]
+      "_enum": [
+        "Token",
+        "PoolShare"
+      ]
     },
     "TypedEnum": {
       "_enum": {
@@ -27,7 +24,7 @@
       }
     },
     "DepositNonce": "u64",
-    "ResourceId": "[u8; 32]",
+    "ResourceId": "[u8;32]",
     "Amount": "i128",
     "Price": "u128",
     "SpecIndex": "Vec<u8>",
@@ -199,7 +196,10 @@
       }
     },
     "AirDropCurrencyId": {
-      "_enum": ["KAR", "ACA"]
+      "_enum": [
+        "KAR",
+        "ACA"
+      ]
     },
     "AuthoritysOriginId": {
       "_enum": [
@@ -211,7 +211,11 @@
       ]
     },
     "AcalaDataProviderId": {
-      "_enum": ["Aggregated", "Acala", "Band"]
+      "_enum": [
+        "Aggregated",
+        "Acala",
+        "Band"
+      ]
     },
     "TradingPair": "(CurrencyId,  CurrencyId)",
     "ChainBridgeChainId": "u8",
@@ -235,7 +239,10 @@
       "startTime": "BlockNumber"
     },
     "LiquidationStrategy": {
-      "_enum": ["Auction", "Exchange"]
+      "_enum": [
+        "Auction",
+        "Exchange"
+      ]
     },
     "OptionRate": "Option<Rate>",
     "OptionRatio": "Option<Ratio>",
@@ -408,7 +415,14 @@
     "OracleKey": "CurrencyId",
     "AsOriginId": "AuthoritysOriginId",
     "ProxyType": {
-      "_enum": ["Any", "CancelProxy", "Governance", "Auction", "Swap", "Loan"]
+      "_enum": [
+        "Any",
+        "CancelProxy",
+        "Governance",
+        "Auction",
+        "Swap",
+        "Loan"
+      ]
     },
     "AtLeast64BitUnsigned": "u128",
     "StableAssetPoolId": "u32",
@@ -427,7 +441,12 @@
       "baseFeeRate": "Rate"
     },
     "StakingPoolPhase": {
-      "_enum": ["Started", "RelaychainUpdated", "LedgerUpdated", "Finished"]
+      "_enum": [
+        "Started",
+        "RelaychainUpdated",
+        "LedgerUpdated",
+        "Finished"
+      ]
     },
     "Ledger": {
       "bonded": "Balance",
@@ -468,11 +487,6 @@
     "AssetMetadata": {
       "symbol": "BoundedVec<u8, u32>",
       "decimals": "u8"
-    },
-    "AccountData": {
-      "free": "Balance",
-      "frozen": "Balance",
-      "reserved": "Balance"
     }
   },
   "typesAlias": {

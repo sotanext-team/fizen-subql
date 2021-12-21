@@ -1,10 +1,8 @@
 import { SubstrateBlock } from '@subql/types'
 import { getBlockTimestamp } from '../utils/getBlockTimestamp'
 import { Block } from '../types/models'
-// import { initSystemConsts } from './system'
-// import { initSystemTokens } from './tokens'
-
-let isFirstSync = true
+import {initSystemTokens} from "./tokens";
+import {initSystemConsts} from "./system";
 
 export async function ensureBlock (block: SubstrateBlock) {
   const recordId = block.block.hash?.toString()
@@ -16,17 +14,15 @@ export async function ensureBlock (block: SubstrateBlock) {
   return data
 }
 
+let isFirstSync = true
 export async function createBlock (origin: SubstrateBlock) {
-  // when the program start, initialize the tokens information and system consts
-  // if (isFirstSync) {
-  //   await initSystemTokens()
-  //   await initSystemConsts()
-  //
-  //   isFirstSync = false
-  // }
+  if (isFirstSync) {
+    await initSystemTokens()
+    await initSystemConsts()
 
+    isFirstSync = false
+  }
   const block = await ensureBlock(origin)
-
   const blockNumber = origin.block.header.number.toBigInt() || BigInt(0)
   const parentHash = origin.block.header.parentHash?.toString()
   const stateRoot = origin.block.header.stateRoot?.toString()
@@ -36,12 +32,11 @@ export async function createBlock (origin: SubstrateBlock) {
 
   block.number = blockNumber
   block.parentHash = parentHash
-  // block.stateRoot = stateRoot
-  // block.extrinsicRoot = extrinsicsRoot
+  block.stateRoot = stateRoot
+  block.extrinsicRoot = extrinsicsRoot
   block.specVersion = specVersion
   block.timestamp = timestamp
-  logger.info("Block number" + blockNumber)
-
+  logger.info("Block number: " + blockNumber)
   await block.save()
 
   return block
