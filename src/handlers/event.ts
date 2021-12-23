@@ -15,14 +15,16 @@ import {
     handleRequiredCollateralRatioUpdated,
     updateLoanPosition,
     updateLoanPositionByLiquidate,
-    handleCloseLoanHasDebitByDex,
+    // handleCloseLoanHasDebitByDex,
 } from "./loan/position";
-
+import {
+    createPositionUpdatedHistory
+} from "./history";
 const dispatch = new Dispatcher<DispatchedEventData>();
 
 dispatch.batchRegist([
     // loan
-    // { key: "loans-PositionUpdated", handler: createPositionUpdatedHistory },
+    { key: "loans-PositionUpdated", handler: createPositionUpdatedHistory },
     { key: "loans-PositionUpdated", handler: updateLoanPosition },
     // { key: "loans-ConfiscateCollateralAndDebit", handler: createConfiscateCollateralAndDebitHistory },
     // { key: "loans-transferLoan", handler: createTransferLoanHistory },
@@ -36,7 +38,7 @@ dispatch.batchRegist([
     { key: "cdpEngine-GlobalInterestRatePerSecUpdated", handler: handleGlobalInterestRatePerSecUpdated, },
     // { key: "cdpEngine-LiquidateUnsafeCDP", handler: createLiquidateUnsafeCDPHistory },
     { key: "cdpEngine-LiquidateUnsafeCDP", handler: updateLoanPositionByLiquidate },
-    { key: "honzon-CloseLoanHasDebitByDex", handler: handleCloseLoanHasDebitByDex},
+    // { key: "honzon-CloseLoanHasDebitByDex", handler: handleCloseLoanHasDebitByDex},
 ]);
 export async function ensureEvent(event: SubstrateEvent) {
     const block = await ensureBlock(event.block);

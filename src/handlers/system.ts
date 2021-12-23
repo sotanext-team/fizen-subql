@@ -10,24 +10,23 @@ function getConsts<T> (path: string) {
 }
 
 export async function initSystemConsts () {
-    const consts = await SystemConsts.get("SYSTEM")
+    logger.info('initSystemConsts')
+    try {
+        const nativeTokenId = 'UNIT'
+        const stableTokenId = 'ZUSD'
+        
+        await getToken(stableTokenId)
+        await getToken(nativeTokenId)
+        const temp = new SystemConsts('SYSTEM')
 
-    if (consts) return Promise.resolve(consts)
+        temp.id = 'SYSTEM'
+        temp.nativeTokenId = nativeTokenId
+        temp.stableTokenId = stableTokenId
 
-    const nativeToken = getConsts<CurrencyId>('transactionPayment.nativeCurrencyId');
-    const stableToken =  getConsts<CurrencyId>('cdpEngine.getStableCurrencyId');
+        await temp.save()
 
-    const nativeTokenId = nativeToken?.asToken.toString()
-    const stableTokenId = stableToken?.asToken.toString()
-
-    await getToken(stableTokenId)
-    await getToken(nativeTokenId)
-    const temp = new SystemConsts('SYSTEM')
-
-    temp.nativeTokenId = nativeTokenId
-    temp.stableTokenId = stableTokenId
-
-    await temp.save()
-
-    return temp
+        return temp
+    } catch (e) {
+        console.log(e.message)
+    }
 }

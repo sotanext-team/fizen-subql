@@ -19,7 +19,6 @@ export async function createBlock (origin: SubstrateBlock) {
   if (isFirstSync) {
     await initSystemTokens()
     await initSystemConsts()
-
     isFirstSync = false
   }
   const block = await ensureBlock(origin)

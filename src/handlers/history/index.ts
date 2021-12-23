@@ -1,3 +1,3 @@
-// export * from './loanHistory'
+export * from './loanHistory'
 export * from './transferHistory'
 

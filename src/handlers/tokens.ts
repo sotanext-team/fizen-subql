@@ -8,12 +8,17 @@ let tokenDecimalMap: Map<string, number>;
 function getDecimal(token: string) {
   return tokenDecimalMap.get(token) || 10;
 }
-
+export function forceToCurrencyIdName(token) {
+  if (typeof token === "string") {
+    return token
+  } else {
+    logger.info(token)
+  }
+}
 // get token 
 export async function getToken(currency: MaybeCurrency) {
-  logger.info(currency);
-  // const tokenName = forceToCurrencyIdName(currency);
-  const tokenName = 'ABC';
+  const tokenName = forceToCurrencyIdName(currency);
+  logger.info("Token name: "+tokenName)
   let token = await Token.get(tokenName);
 
   if (!token) {
@@ -32,20 +37,24 @@ export async function getToken(currency: MaybeCurrency) {
 
     let decimal = 10;
     decimal = getDecimal(tokenName);
+    token.id = tokenName;
     token.decimal = decimal;
     token.name = tokenName;
+    logger.info(tokenName + "-" + token.id)
 
     token.price = '0'
 
     token.issuance = '0'
-    token.lockedInDex = '0'
-    token.lockedInIncentive = '0'
     token.lockedInLoan = '0'
     token.volume = '0'
     token.volumeUSD = '0'
-    token.txCount = BigInt(0)
-
-    await token.save();
+    token.txCount = 0;
+    try {
+      let result = await token.save();
+      logger.info("save success:")
+    } catch (e) {
+      logger.info(e.message)
+    }
   }
 
   return token;

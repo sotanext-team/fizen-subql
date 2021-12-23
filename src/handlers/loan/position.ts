@@ -9,12 +9,11 @@ import { AccountId } from "@polkadot/types/interfaces"
 import { add, minus } from "../../utils"
 import { LoanParams } from "../../types/index"
 import { LoanParamsHistory } from "../../types"
-import { getToken } from "../tokens"
+import { forceToCurrencyIdName, getToken } from "../tokens"
 
-async function getLoanPositionRecord (owner: AccountId, token: MaybeCurrency ) {
+async function getLoanPositionRecord (owner: AccountId, token: string) {
 	logger.info("getLoanPositionRecord: ", token)
-	// const collateralName = forceToCurrencyIdName(token)
-	const collateralName = 'CDE'
+	const collateralName = token;
 	const ownerAddress = owner.toString()
 	const key = `${ownerAddress}-${collateralName}`
 
@@ -34,11 +33,10 @@ async function getLoanPositionRecord (owner: AccountId, token: MaybeCurrency ) {
 	return record
 }
 
-async function getTotalLoanPositionRecord (token: MaybeCurrency) {
+async function getTotalLoanPositionRecord (token: string) {
 	logger.info("getTotalLoanPositionRecord: ", token)
-
-	// const collateralName = forceToCurrencyIdName(token)
-	const collateralName = 'CDE'
+	logger.info("typeof "+ typeof token)
+	const collateralName = token
 	let record = await TotalLoanPosition.get(collateralName)
 
 	if (!record) {
@@ -54,11 +52,9 @@ async function getTotalLoanPositionRecord (token: MaybeCurrency) {
 	return record
 }
 
-async function getLoanParamsRecord (token: MaybeCurrency) {
-	logger.info("getLoanParamsRecord: ", token)
+async function getLoanParamsRecord (token: string) {
 
-	// const collateralName = forceToCurrencyIdName(token)
-	const collateralName = 'CDE'
+	const collateralName = token;
 	let record = await LoanParams.get(collateralName)
 
 	if (!record) {
@@ -74,15 +70,12 @@ async function getLoanParamsRecord (token: MaybeCurrency) {
 
 		await record.save()
 	}
-
 	return record
 }
 
-async function getLoanParamsHistoryRecord (token: MaybeCurrency, blockNumber: bigint, blockId: string) {
+async function getLoanParamsHistoryRecord (token: string, blockNumber: bigint, blockId: string) {
 	logger.info("getLoanParamsHistoryRecord: ", token)
-
-	// const collateralName = forceToCurrencyIdName(token)
-	const collateralName = 'CDE'
+	const collateralName = token
 	const recordId = `${collateralName}-${blockNumber}`
 
 	let record = await LoanParamsHistory.get(recordId)
@@ -113,9 +106,12 @@ export const updateLoanPosition: EventHandler = async ({ rawEvent}) => {
 	// [owner, collateral_type, collateral_adjustment, debit_adjustment\]
 	const [owner, collateral, collateralAdjustment, debitAdjustment] = rawEvent.event.data as unknown as [AccountId, CurrencyId, Amount, Amount];
 
-	const collateralToken = await getToken(collateral)
-	const record = await getLoanPositionRecord(owner, collateral)
-	const totalRecord = await getTotalLoanPositionRecord(collateral)
+	let tokenInfo = await api.query.assetRegistry.assets(collateral);
+		tokenInfo = JSON.parse(tokenInfo as unknown as string);
+		let tokenName = hex2a(tokenInfo['name'])
+	const collateralToken = await getToken(tokenName)
+	const record = await getLoanPositionRecord(owner, tokenName)
+	const totalRecord = await getTotalLoanPositionRecord(tokenName)
 
 	record.collateralAmount = add(record.collateralAmount, collateralAdjustment.toString()).toChainData()
 	record.debitAmount = add(record.debitAmount, debitAdjustment.toString()).toChainData()
@@ -134,10 +130,12 @@ export const updateLoanPosition: EventHandler = async ({ rawEvent}) => {
 export const updateLoanPositionByLiquidate: EventHandler = async ({ rawEvent}) => {
 	// [collateral_type, owner, collateral_amount, bad_debt_value, liquidation_strategy\]
 	const [collateral, owner, collateralAmount, badDebtValue] = rawEvent.event.data as unknown as [CurrencyId, AccountId, Amount, Amount];
-
-	const collateralToken = await getToken(collateral)
-	const record = await getLoanPositionRecord(owner, collateral);
-	const totalRecord = await getTotalLoanPositionRecord(collateral)
+	let tokenInfo = await api.query.assetRegistry.assets(collateral);
+		tokenInfo = JSON.parse(tokenInfo as unknown as string);
+		let tokenName = hex2a(tokenInfo['name'])
+	const collateralToken = await getToken(tokenName)
+	const record = await getLoanPositionRecord(owner, tokenName);
+	const totalRecord = await getTotalLoanPositionRecord(tokenName)
 
 	const positionCollateralAmount = record.collateralAmount
 	const positionDebitAmount = record.debitAmount
@@ -157,19 +155,27 @@ export const updateLoanPositionByLiquidate: EventHandler = async ({ rawEvent}) =
 	await totalRecord.save()
 	await record.save()
 }
-
-
+function hex2a(hexx) {
+	logger.info(hexx)
+    var str = '';
+    for (var i = 0; i < hexx.length; i += 2)
+        str += String.fromCharCode(parseInt(hexx.substr(i, 2), 16));
+	str = str.replace(/\0/g, '');
+    return str;
+}
 const createParamsUpdateFN = (name: string): EventHandler => {
 	return async ({ event, rawEvent }) => {
 		const [collateral, data] = rawEvent.event.data as  unknown as [CurrencyId, OptionRate]
 	
 		const blockNumber = event.blockNumber
 		const blockId = event.blockId
-
-		await getToken(collateral)
-
-		const record = await getLoanParamsRecord(collateral)
-		const historyRecord = await getLoanParamsHistoryRecord(collateral, blockNumber, blockId)
+		let tokenInfo = await api.query.assetRegistry.assets(collateral);
+		tokenInfo = JSON.parse(tokenInfo as unknown as string);
+		let tokenName = hex2a(tokenInfo['name'])
+		await getToken(tokenName)
+		logger.info("createParamsUpdateFN - tokenName: "+ tokenName)
+		const record = await getLoanParamsRecord(tokenName)
+		const historyRecord = await getLoanParamsHistoryRecord(tokenName, blockNumber, blockId)
 	
 		const preData = record[name]
 		const preStartAtBlockNumber = record.startAtBlockNumber
@@ -194,24 +200,25 @@ export const handleRequiredCollateralRatioUpdated = createParamsUpdateFN('requir
 export const handleMaximumTotalDebitValueUpdated = createParamsUpdateFN('maximumTotalDebitValue')
 export const handleGlobalInterestRatePerSecUpdated = createParamsUpdateFN('globalInterestRatePerSec')
 
-// clear user loan position and global position when close loan by dex
-export const handleCloseLoanHasDebitByDex: EventHandler = async ({ rawEvent}) => {
-	// [collateral_type, owner, sold_collateral_amount, refund_collateral_amount, debit_value\]
-	const [collateral_type, owner, sold_collateral_amount, refund_collateral_amount, debit_value] = rawEvent.event.data as unknown as [CurrencyId, AccountId, Balance, Balance, Balance];
-	const record = await getLoanPositionRecord(owner, collateral_type);
-	const totalRecord = await getTotalLoanPositionRecord(collateral_type);
+// // clear user loan position and global position when close loan by dex
+// export const handleCloseLoanHasDebitByDex: EventHandler = async ({ rawEvent}) => {
+// 	// [collateral_type, owner, sold_collateral_amount, refund_collateral_amount, debit_value\]
+// 	const [collateral_type, owner, sold_collateral_amount, refund_collateral_amount, debit_value] = rawEvent.event.data as unknown as [CurrencyId, AccountId, Balance, Balance, Balance];
+// 	logger.info("tokenName")
+// 	const record = await getLoanPositionRecord(owner, collateral_type);
+// 	const totalRecord = await getTotalLoanPositionRecord(collateral_type);
 
-	const positionCollateralAmount = record.collateralAmount
-	const positionDebitAmount = record.debitAmount
+// 	const positionCollateralAmount = record.collateralAmount
+// 	const positionDebitAmount = record.debitAmount
 
-	totalRecord.collateralAmount = minus(totalRecord.collateralAmount, positionCollateralAmount).toChainData()
-	totalRecord.debitAmount = minus(totalRecord.debitAmount, positionDebitAmount).toChainData()
+// 	totalRecord.collateralAmount = minus(totalRecord.collateralAmount, positionCollateralAmount).toChainData()
+// 	totalRecord.debitAmount = minus(totalRecord.debitAmount, positionDebitAmount).toChainData()
 
-	// force set position to zero
-	record.collateralAmount = '0'
-	record.debitAmount = '0'
+// 	// force set position to zero
+// 	record.collateralAmount = '0'
+// 	record.debitAmount = '0'
 
-	await record.save();
-	await totalRecord.save();
+// 	await record.save();
+// 	await totalRecord.save();
 
-}
+// }

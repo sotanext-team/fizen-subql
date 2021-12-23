@@ -139,12 +139,9 @@ type Token @entity {
   price: String
   issuance: String
   lockedInLoan: String
-  lockedInDex: String
-  lockedInIncentive: String
-
   volume: String
   volumeUSD: String
-  txCount: BigInt
+  txCount: Int
 }
 type LoanParams @entity {
   id: ID!
