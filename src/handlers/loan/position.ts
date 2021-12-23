@@ -1,9 +1,6 @@
 import { EventHandler } from "../types"
 import { LoanPosition } from "../../types"
 import { TotalLoanPosition } from "../../types"
-import { MaybeCurrency,
-	// forceToCurrencyIdName
-} from "@acala-network/sdk-core"
 import { Amount, Balance, CurrencyId, OptionRate } from "@acala-network/types/interfaces"
 import { AccountId } from "@polkadot/types/interfaces"
 import { add, minus } from "../../utils"
