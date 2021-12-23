@@ -9,7 +9,6 @@ import { LoanParamsHistory } from "../../types"
 import { getToken } from "../tokens"
 
 async function getLoanPositionRecord (owner: AccountId, token: string) {
-	logger.info("getLoanPositionRecord: ", token)
 	const collateralName = token;
 	const ownerAddress = owner.toString()
 	const key = `${ownerAddress}-${collateralName}`
@@ -31,7 +30,6 @@ async function getLoanPositionRecord (owner: AccountId, token: string) {
 }
 
 async function getTotalLoanPositionRecord (token: string) {
-	logger.info("getTotalLoanPositionRecord: ", token)
 	const collateralName = token
 	let record = await TotalLoanPosition.get(collateralName)
 
@@ -70,7 +68,6 @@ async function getLoanParamsRecord (token: string) {
 }
 
 async function getLoanParamsHistoryRecord (token: string, blockNumber: bigint, blockId: string) {
-	logger.info("getLoanParamsHistoryRecord: ", token)
 	const collateralName = token
 	const recordId = `${collateralName}-${blockNumber}`
 

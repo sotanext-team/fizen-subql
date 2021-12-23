@@ -1,6 +1,4 @@
-import {
-  // forceToCurrencyIdName,
-  MaybeCurrency } from "@acala-network/sdk-core";
+import { MaybeCurrency } from "@acala-network/sdk-core";
 import { SystemConsts, Token } from "../types/models";
 
 let tokenDecimalMap: Map<string, number>;
@@ -18,7 +16,6 @@ export function forceToCurrencyIdName(token) {
 // get token 
 export async function getToken(currency: MaybeCurrency) {
   const tokenName = forceToCurrencyIdName(currency);
-  logger.info("Token name: "+tokenName)
   let token = await Token.get(tokenName);
 
   if (!token) {
@@ -40,7 +37,6 @@ export async function getToken(currency: MaybeCurrency) {
     token.id = tokenName;
     token.decimal = decimal;
     token.name = tokenName;
-    logger.info(tokenName + "-" + token.id)
 
     token.price = '0'
 

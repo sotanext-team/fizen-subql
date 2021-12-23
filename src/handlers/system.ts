@@ -1,7 +1,6 @@
 // tracker all the system config like liquid token, staking token
 import { get } from 'lodash'
 
-import { CurrencyId } from "@acala-network/types/interfaces"
 import{ getToken } from './tokens'
 import { SystemConsts } from '../types'
 
