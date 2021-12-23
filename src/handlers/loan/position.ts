@@ -1,12 +1,12 @@
 import { EventHandler } from "../types"
 import { LoanPosition } from "../../types"
 import { TotalLoanPosition } from "../../types"
-import { Amount, Balance, CurrencyId, OptionRate } from "@acala-network/types/interfaces"
+import { Amount, CurrencyId, OptionRate } from "@acala-network/types/interfaces"
 import { AccountId } from "@polkadot/types/interfaces"
 import { add, minus } from "../../utils"
 import { LoanParams } from "../../types/index"
 import { LoanParamsHistory } from "../../types"
-import { forceToCurrencyIdName, getToken } from "../tokens"
+import { getToken } from "../tokens"
 
 async function getLoanPositionRecord (owner: AccountId, token: string) {
 	logger.info("getLoanPositionRecord: ", token)
@@ -32,7 +32,6 @@ async function getLoanPositionRecord (owner: AccountId, token: string) {
 
 async function getTotalLoanPositionRecord (token: string) {
 	logger.info("getTotalLoanPositionRecord: ", token)
-	logger.info("typeof "+ typeof token)
 	const collateralName = token
 	let record = await TotalLoanPosition.get(collateralName)
 
