@@ -35,16 +35,27 @@ Open your browser and head to `http://localhost:3000`.
 Finally, you should see a GraphQL playground is showing in the explorer and the schemas that ready to query.
 Sample query: 
 
+
 ````graphql
 {
-  query{
-    blocks(first:10){
-      nodes{
-        number,
-        parentHash,
-        specVersion
-      }
+    query{
+        loanPositions(
+            first:10,
+            filter: {
+                ownerId: {
+                    equalTo: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                }
+            }
+        ){
+            nodes{
+                ownerId
+                id,
+                collateralId,
+                debitAmount,
+                collateralAmount
+            },
+            totalCount
+        }
     }
-  }
 }
 ````
