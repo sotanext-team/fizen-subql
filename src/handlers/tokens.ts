@@ -44,7 +44,7 @@ export async function getToken(currency: MaybeCurrency) {
     token.lockedInLoan = '0'
     token.volume = '0'
     token.volumeUSD = '0'
-    token.txCount = 0;
+    token.txCount = BigInt(0);
     await token.save();
   }
 

@@ -11,7 +11,9 @@ type Block @entity {
   parentHash: String
   specVersion: String
   stateRoot: String
-  extrinsicRoot: String
+  extrinsicRoot: String,
+  extrinsics: [Extrinsic] @derivedFrom(field: "block")
+  events: [Event] @derivedFrom(field: "block")
 }
 
 type Event @entity {
@@ -105,22 +107,7 @@ type LoanPosition @entity {
   debitAmount: String
   collateralAmount: String
 }
-type LoanParamsHistory @entity {
-  id: ID!
 
-  collateral: Token
-
-  startAtBlockNumber: BigInt
-  startAtBlock: Block
-  endAtBlockNumber: BigInt
-  endAtBlock: Block
-  maximumTotalDebitValue: String
-  interestRatePerSec: String
-  liquidationRatio: String
-  liquidationPenalty: String
-  requiredCollateralRatio: String
-  globalInterestRatePerSec: String
-}
 type SystemConsts @entity {
   id: ID!
   nativeToken: Token
@@ -141,7 +128,7 @@ type Token @entity {
   lockedInLoan: String
   volume: String
   volumeUSD: String
-  txCount: Int
+  txCount: BigInt
 }
 type LoanParams @entity {
   id: ID!
@@ -155,6 +142,22 @@ type LoanParams @entity {
   startAtBlockNumber: BigInt
   startAtBlock: Block
 
+  maximumTotalDebitValue: String
+  interestRatePerSec: String
+  liquidationRatio: String
+  liquidationPenalty: String
+  requiredCollateralRatio: String
+  globalInterestRatePerSec: String
+}
+type LoanParamsHistory @entity {
+  id: ID!
+
+  collateral: Token
+
+  startAtBlockNumber: BigInt
+  startAtBlock: Block
+  endAtBlockNumber: BigInt
+  endAtBlock: Block
   maximumTotalDebitValue: String
   interestRatePerSec: String
   liquidationRatio: String
