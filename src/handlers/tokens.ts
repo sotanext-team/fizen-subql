@@ -49,12 +49,7 @@ export async function getToken(currency: MaybeCurrency) {
     token.volume = '0'
     token.volumeUSD = '0'
     token.txCount = 0;
-    try {
-      let result = await token.save();
-      logger.info("save success:")
-    } catch (e) {
-      logger.info(e.message)
-    }
+    await token.save();
   }
 
   return token;
