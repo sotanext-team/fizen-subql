@@ -92,7 +92,7 @@ type LoanAction @entity {
   id: ID!
 
   account: Account
-
+  collateral: Int
   type: String
   subType: String
   data: [KVData]
