@@ -33,7 +33,7 @@ docker-compose pull && docker-compose up
 Open your browser and head to `http://localhost:3000`.
 
 Finally, you should see a GraphQL playground is showing in the explorer and the schemas that ready to query.
-Sample query: 
+Sample query to get all Loan of a user: 
 
 
 ````graphql
@@ -53,6 +53,37 @@ Sample query:
                 collateralId,
                 debitAmount,
                 collateralAmount
+            },
+            totalCount
+        }
+    }
+}
+````
+
+Sample query to get all loan history of a collateral:
+
+````graphql
+{
+    query{
+        loanActions(
+            first:2,
+            filter: {
+                accountId: {
+                    equalTo: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+                },
+                collateral: {
+                    equalTo: 11
+                }
+            }
+        ){
+            nodes{
+                accountId
+                id,
+                collateral,
+                type,
+                data,
+                extrinsicId,
+                timestamp
             },
             totalCount
         }
