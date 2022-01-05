@@ -10,7 +10,6 @@ export function forceToCurrencyIdName(token) {
   if (typeof token === "string") {
     return token
   } else {
-    logger.info(token)
   }
 }
 // get token 

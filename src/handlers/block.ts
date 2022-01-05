@@ -35,7 +35,6 @@ export async function createBlock (origin: SubstrateBlock) {
   block.extrinsicRoot = extrinsicsRoot
   block.specVersion = specVersion
   block.timestamp = timestamp
-  logger.info("Block number: " + blockNumber)
   await block.save()
 
   return block

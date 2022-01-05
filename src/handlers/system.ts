@@ -9,7 +9,6 @@ function getConsts<T> (path: string) {
 }
 
 export async function initSystemConsts () {
-    logger.info('initSystemConsts')
     try {
         const nativeTokenId = 'UNIT'
         const stableTokenId = 'ZUSD'

@@ -32,7 +32,6 @@ export const createPositionUpdatedHistory: EventHandler =  async ({ event, rawEv
 
   if (rawEvent.event.data) {
     const [_, collateral] = rawEvent.event.data;
-    logger.info("Collateral: " + collateral)
 
     // save the debit exchange rate
     if (collateral) {

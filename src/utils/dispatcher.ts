@@ -21,8 +21,6 @@ export class Dispatcher<DispatchData> {
     if (!handlers) return
 
     await Promise.all(handlers.map((handler) => handler(data))).catch((e) => {
-      logger.info(e.stack.toString())
-
       throw e
     })
   }

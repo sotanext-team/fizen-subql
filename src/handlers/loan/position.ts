@@ -149,7 +149,6 @@ export const updateLoanPositionByLiquidate: EventHandler = async ({ rawEvent}) =
 	await record.save()
 }
 function hex2a(hexx) {
-	logger.info(hexx)
     var str = '';
     for (var i = 0; i < hexx.length; i += 2)
         str += String.fromCharCode(parseInt(hexx.substr(i, 2), 16));
@@ -166,7 +165,6 @@ const createParamsUpdateFN = (name: string): EventHandler => {
 		tokenInfo = JSON.parse(tokenInfo as unknown as string);
 		let tokenName = hex2a(tokenInfo['name'])
 		await getToken(tokenName)
-		logger.info("createParamsUpdateFN - tokenName: "+ tokenName)
 		const record = await getLoanParamsRecord(tokenName)
 		const historyRecord = await getLoanParamsHistoryRecord(tokenName, blockNumber, blockId)
 	
