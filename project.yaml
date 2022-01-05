@@ -6,7 +6,7 @@ repository: ''
 schema:
   file: ./schema.graphql
 network:
-  genesisHash: '0x18e5b59ea1242150f57b2f400985e176f2a193b17fdc99569d20b0a16eef6ef8'
+  genesisHash: '0x4f266e87c78ae05decac5a600c5e8a1a1eb2347c7dabbbbb2ceb53580e8899bc'
   endpoint: wss://13.229.32.165:443
   chaintypes:
     file: types.json
