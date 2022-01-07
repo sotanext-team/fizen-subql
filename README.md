@@ -28,6 +28,18 @@ Under the project directory run following command:
 ```
 docker-compose pull && docker-compose up
 ```
+
+## On Error
+
+#### On "Unknown name app" error
+First run Postgres for db, then go to project folder and run two following command
+```
+NODE_TLS_REJECT_UNAUTHORIZED=0 subql-node -f . --force-clean --subquery-name=fizen-subql
+```
+```
+DB_USER=postgres DB_PASS=postgres DB_DATABASE=postgres subql-query --name fizen-subql --playground
+```
+After that, close it and try to rerun docker-compose up
 #### Query the project
 
 Open your browser and head to `http://localhost:3000`.
